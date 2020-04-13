@@ -1,0 +1,12 @@
+main: me.rayzr522.tntlimiter.TntLimiter
+
+name: ${project.name}
+description: ${project.description}
+version: ${project.version}
+author: Rayzr
+
+commands:
+  tntlimiter:
+    description: The main command for TntLimiter.
+    # aliases: []
+    usage: "\u00A7cRayzr hecc'd something up."

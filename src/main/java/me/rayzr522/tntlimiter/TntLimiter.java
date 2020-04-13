@@ -2,8 +2,12 @@ package me.rayzr522.tntlimiter;
 
 import me.rayzr522.tntlimiter.command.CommandTntLimiter;
 import me.rayzr522.tntlimiter.utils.MessageHandler;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -13,7 +17,7 @@ import java.util.logging.Level;
 /**
  * @author Rayzr
  */
-public class TntLimiter extends JavaPlugin {
+public class TntLimiter extends JavaPlugin implements Listener {
     private static TntLimiter instance;
     private MessageHandler messages = new MessageHandler();
 
@@ -33,11 +37,18 @@ public class TntLimiter extends JavaPlugin {
 
         // Set up commands
         getCommand("tntlimiter").setExecutor(new CommandTntLimiter(this));
+
+        getServer().getPluginManager().registerEvents(this, this);
     }
 
     @Override
     public void onDisable() {
         instance = null;
+    }
+
+    @EventHandler
+    public void onTntExplode(EntityExplodeEvent e) {
+        e.blockList().removeIf(block -> block.getType() == Material.TNT);
     }
 
     /**
